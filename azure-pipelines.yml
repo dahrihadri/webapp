@@ -28,7 +28,19 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)'
+
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(086cc5e4-9c9a-411d-8005-7043ce05d6b6)'
+    appType: 'webApp'
+    WebAppName: 'dahrihadriacc2023'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
